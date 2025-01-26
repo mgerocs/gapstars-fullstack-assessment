@@ -4,6 +4,8 @@ import { fetchData } from "../../api/fetch";
 import { groupByIndustry } from "./group-by-industry";
 import { Card } from "../card/Card";
 
+import "./List.css";
+
 export function List() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
@@ -29,20 +31,17 @@ export function List() {
     [data]
   );
 
-  console.log(companiesByIndustry);
-
   return (
-    <div>
-      <h1>List</h1>
+    <>
       {error && <p>{error.message}</p>}
-      {loading && <p>Loading...</p>}
-      {companiesByIndustry && (
-        <ul>
+      {loading && <div className="loader"></div>}
+         {companiesByIndustry && (
+        <div className="cards">
           {Object.entries(companiesByIndustry).map(([industry, companies]) => (
             <Card key={industry} industry={industry} companies={companies} />
           ))}
-        </ul>
+        </div>
       )}
-    </div>
+    </>
   );
 }
