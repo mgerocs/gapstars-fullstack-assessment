@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Item } from "../../api/types";
 import { fetchData } from "../../api/fetch";
-import { groupByIndustry } from "./group-by-industry";
+import { groupByIndustry } from "./groupByIndustry";
 import { Card } from "../card/Card";
 
 import "./List.css";
@@ -17,7 +17,7 @@ export function List() {
       try {
         const data = await fetchData();
 
-        setData(data?.items || null);
+        setData((data?.items) || null);
       } catch (error) {
         setError(error as Error);
       } finally {
@@ -35,7 +35,7 @@ export function List() {
     <>
       {error && <p>{error.message}</p>}
       {loading && <div className="loader"></div>}
-         {companiesByIndustry && (
+      {companiesByIndustry && (
         <div className="cards">
           {Object.entries(companiesByIndustry).map(([industry, companies]) => (
             <Card key={industry} industry={industry} companies={companies} />
